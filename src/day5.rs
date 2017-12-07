@@ -1,5 +1,4 @@
 use lib;
-use std::collections::HashSet;
 
 pub fn puzzle1() {
 	let inputs_raw = lib::load_inputs(&"input-5".to_string())
