@@ -1,7 +1,6 @@
 use lib;
 use std::collections::HashSet;
 use std::iter::FromIterator;
-use std::str::Chars;
 
 pub fn puzzle1() {
 	let answer = lib::load_inputs(&"input-4".to_string())
