@@ -2,7 +2,8 @@ mod lib;
 mod day1;
 mod day2;
 mod day3;
+mod day4;
 
 fn main() {
-	day3::puzzle2();
+	day4::puzzle2();
 }
