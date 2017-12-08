@@ -75,12 +75,6 @@ pub fn puzzle1() {
 			ps.insert(node.clone());
 		}
 	}
-
-	for (node, ps) in parents.iter() {
-		if ps.len() == 0 {
-			println!("{}", node);
-		}
-	}
 	
 	let parent_keys: HashSet<&String> = HashSet::from_iter(parents.keys());
 	for (node, _) in inputs.iter() {
