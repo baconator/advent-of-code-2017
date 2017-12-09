@@ -102,5 +102,5 @@ pub fn puzzle1() {
 
 pub fn puzzle2() {
 	let inputs = make_inputs();
-
+	let parent_node = inputs[find_root(&inputs)];
 }
