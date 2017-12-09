@@ -47,8 +47,5 @@ fn make_inputs() {
 		.map(|(name, &(weight, ref child_names)): (&String, &(u32, Vec<String>))| { 
 			(name.clone(), Node { weight: weight, name: name.clone(), children: Vec::new() })
 		} ));
-	for mut node in nodes.values_mut() {
-		let child_names = &name_to_node[&node.name].1;
-		node.children = child_names.iter().map(|child_name| { &nodes[child_name] } ).collect();
-	}
+	let node_children = nodes.values.map(|node| { name_to_node[&node.name].1 } );
 }
