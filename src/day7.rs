@@ -52,11 +52,11 @@ fn check_weight<'a>(node: &'a Node, inputs: &'a HashMap<String, Node>) -> Weight
 	}
 }
 
-pub fn puzzle1() {
+fn make_inputs() -> HashMap<String, Node> {
 	let re = Regex::new(r"(^\w+) \(([0-9]+)\)(?: -> ((?:\w+, )*\w+))?").unwrap();
 	let input_str = lib::load_inputs(&"input-7".to_string())
 		.expect("");
-	let inputs: HashMap<String, _> = HashMap::from_iter(input_str
+	HashMap::from_iter(input_str
 		.split("\n")
 		.filter_map(|raw| { 
 			for captures in re.captures(raw) {
@@ -73,7 +73,11 @@ pub fn puzzle1() {
 				return Some((name, Node { weight: weight, children: children } ));
 			} 
 			None
-		} ));
+		} ))
+}
+
+pub fn puzzle1() {
+	let inputs = make_inputs();
 	let mut parents: HashMap<String, HashSet<String>> = HashMap::new();
 
 	for (node, value) in inputs.iter() {
