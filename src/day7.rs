@@ -76,8 +76,7 @@ fn make_inputs() -> HashMap<String, Node> {
 		} ))
 }
 
-pub fn puzzle1() {
-	let inputs = make_inputs();
+fn find_root<'a>(inputs: &'a HashMap<String, Node>) -> &'a String {
 	let mut parents: HashMap<String, HashSet<String>> = HashMap::new();
 
 	for (node, value) in inputs.iter() {
@@ -90,7 +89,18 @@ pub fn puzzle1() {
 	let parent_keys: HashSet<&String> = HashSet::from_iter(parents.keys());
 	for (node, _) in inputs.iter() {
 		if !parent_keys.contains(node) {
-			println!("{}", node);
+			return node;
 		}
 	}
+	panic!();
+}
+
+pub fn puzzle1() {
+	let inputs = make_inputs();
+	println!("{}", find_root(&inputs));
+}
+
+pub fn puzzle2() {
+	let inputs = make_inputs();
+
 }
