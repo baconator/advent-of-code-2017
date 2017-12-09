@@ -49,7 +49,7 @@ fn make_inputs() {
 			(name.clone(), Node { weight: weight, name: name.clone(), children: Vec::new() })
 		} ));
 	let node_children = nodes.values().map(|node| { &name_to_node[&node.name].1 } ).collect::<Vec<_>>();
-	for mut node in nodes.values_mut() {
+	for (mut node, children) in nodes.values_mut().zip(node_children) {
 
 	}
 }
