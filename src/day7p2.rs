@@ -5,6 +5,7 @@ use self::regex::Regex;
 use std::collections::HashMap;
 use std::collections::HashSet;
 use std::iter::FromIterator;
+use std::iter::Map;
 
 struct Node<'a> {
 	weight: u32,
@@ -47,5 +48,8 @@ fn make_inputs() {
 		.map(|(name, &(weight, ref child_names)): (&String, &(u32, Vec<String>))| { 
 			(name.clone(), Node { weight: weight, name: name.clone(), children: Vec::new() })
 		} ));
-	let node_children = nodes.values.map(|node| { name_to_node[&node.name].1 } );
+	let node_children = nodes.values().map(|node| { &name_to_node[&node.name].1 } ).collect::<Vec<_>>();
+	for mut node in nodes.values_mut() {
+
+	}
 }
