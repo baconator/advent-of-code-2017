@@ -9,13 +9,15 @@ use std::iter::FromIterator;
 #[derive(PartialEq)]
 #[derive(Eq)]
 #[derive(Hash)]
+#[derive(Debug)]
 struct Node {
 	weight: u32,
 	children: Vec<String>
 }
 
+#[derive(Debug)]
 enum WeightResult<'a> {
-	Unbalanced(&'a Node),
+	Unbalanced(&'a String, &'a Node),
 	Weight(u32, &'a Node)
 }
 
@@ -25,16 +27,16 @@ fn check_weight<'a>(node: &'a Node, inputs: &'a HashMap<String, Node>) -> Weight
 	} else {
 		let child_weights = node.children
 			.iter()
-			.map(|child| { check_weight(&inputs[child], inputs) } );
+			.map(|child| { (child, check_weight(&inputs[child], inputs)) } );
 
-		let mut children_by_weight: HashMap<u32, HashSet<&Node>> = HashMap::new();
+		let mut children_by_weight: HashMap<u32, HashSet<(&String, &Node)>> = HashMap::new();
 
-		for child_weight in child_weights {
+		for (name, child_weight) in child_weights {
 			match child_weight {
-				WeightResult::Unbalanced(_) => return child_weight,
+				WeightResult::Unbalanced(_, _) => return child_weight,
 				WeightResult::Weight(w, n) => {
 					let weight_class = children_by_weight.entry(w).or_insert(HashSet::new());
-					weight_class.insert(n);
+					weight_class.insert((name, n));
 				} 
 			}
 		}
@@ -45,10 +47,11 @@ fn check_weight<'a>(node: &'a Node, inputs: &'a HashMap<String, Node>) -> Weight
 				.min_by_key(|key| { children_by_weight[key].len() } )
 				.unwrap();
 
-			return WeightResult::Unbalanced(children_by_weight[different_weight].iter().next().unwrap());
+			let output = children_by_weight[different_weight].iter().next().unwrap();
+			return WeightResult::Unbalanced(output.0, output.1);
 		}
 
-		return WeightResult::Weight(node.weight, node);
+		return WeightResult::Weight(node.weight + children_by_weight.values().flat_map(|set| { set.iter().map(|pair| { pair.1.weight } ) } ).sum::<u32>(), node);
 	}
 }
 
@@ -102,5 +105,6 @@ pub fn puzzle1() {
 
 pub fn puzzle2() {
 	let inputs = make_inputs();
-	let parent_node = inputs[find_root(&inputs)];
+	let root = &inputs[find_root(&inputs)];
+	println!("{:?}", check_weight(root, &inputs));
 }
