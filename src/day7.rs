@@ -35,13 +35,20 @@ fn check_weight<'a>(node: &'a Node, inputs: &'a HashMap<String, Node>) -> Weight
 				WeightResult::Weight(w, n) => {
 					let weight_class = children_by_weight.entry(w).or_insert(HashSet::new());
 					weight_class.insert(n);
-
-					// put check here.
 				} 
 			}
 		}
 
-		WeightResult::Weight(node.weight, node)
+		if children_by_weight.len() > 1 {
+			let different_weight = children_by_weight
+				.keys()
+				.min_by_key(|key| { children_by_weight[key].len() } )
+				.unwrap();
+
+			return WeightResult::Unbalanced(children_by_weight[different_weight].iter().next().unwrap());
+		}
+
+		return WeightResult::Weight(node.weight, node);
 	}
 }
 
