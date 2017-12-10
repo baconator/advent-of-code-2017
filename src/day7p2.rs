@@ -44,12 +44,15 @@ fn make_inputs() {
 			(name, (weight, children))
 		} ));
 
-	let mut nodes: HashMap<String, Node> = HashMap::from_iter(name_to_node.iter()
+	let nodes: HashMap<String, Node> = HashMap::from_iter(name_to_node.iter()
 		.map(|(name, &(weight, ref child_names)): (&String, &(u32, Vec<String>))| { 
 			(name.clone(), Node { weight: weight, name: name.clone(), children: Vec::new() })
 		} ));
-	let node_children = nodes.values().map(|node| { &name_to_node[&node.name].1 } ).collect::<Vec<_>>();
-	for (mut node, children) in nodes.values_mut().zip(node_children) {
+	// let node_children: Vec<Vec<&Node>> = nodes.values()
+	// 	.map(|node| { name_to_node[&node.name].1.iter()
+	// 		.map(|child_name| { &nodes[child_name] } ).collect::<Vec<&Node>>() } )
+	// 	.collect::<Vec<Vec<&Node>>>();
+	// for mut node in nodes.values_mut() {
 
-	}
+	// }
 }
