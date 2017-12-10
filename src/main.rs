@@ -8,7 +8,8 @@ mod day6;
 mod day7;
 mod day7p2;
 mod day8;
+mod day9;
 
 fn main() {
-	println!("{:?}", day8::puzzle2);
+	println!("{:?}", day8::puzzle2());
 }
