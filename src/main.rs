@@ -10,6 +10,8 @@ mod day7p2;
 mod day8;
 mod day9;
 
+extern crate regex;
+
 fn main() {
 	println!("{:?}", day8::puzzle2());
 }
